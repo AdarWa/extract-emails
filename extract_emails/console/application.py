@@ -52,10 +52,17 @@ def get_browser(browser: str) -> browsers.PageSourceGetter:
     "-d",
     "--depth",
     type=int,
-    default=20,
-    help="Maximum depth for URL search. Default: 20",
+    default=5,
+    help="Maximum depth for URL search. Default: 5",
 )
-def main(url: str, output_file: str, browser_name: str, data_type: str, depth: int):
+@click.option(
+    "-ml",
+    "--max-links",
+    type=int,
+    default=5,
+    help="Maximum number of links to follow from each page. Default: 5",
+)
+def main(url: str, output_file: str, browser_name: str, data_type: str, depth: int, max_links: int):
     browser = get_browser(browser_name)
     browser.start()
 
@@ -64,6 +71,7 @@ def main(url: str, output_file: str, browser_name: str, data_type: str, depth: i
         browser=browser,
         data_extractors=get_data_extractors(data_type),
         depth=depth,
+        max_links_from_page=max_links,
     )
     data = worker.get_data()
 

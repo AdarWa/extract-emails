@@ -16,7 +16,15 @@ def test_default_depth():
         website_url="https://example.com",
         browser=make_browser(),
     )
-    assert worker.depth == 20
+    assert worker.depth == 5
+
+
+def test_default_max_links_from_page():
+    worker = DefaultWorker(
+        website_url="https://example.com",
+        browser=make_browser(),
+    )
+    assert worker.max_links_from_page == 5
 
 
 def test_custom_depth():
