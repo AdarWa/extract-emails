@@ -48,7 +48,14 @@ def get_browser(browser: str) -> browsers.PageSourceGetter:
     help="Data type to extract, must be a list separated by comma, e.g. 'email,linkedin. "
     "Available options: email, linkedin. Default: email,linkedin",
 )
-def main(url: str, output_file: str, browser_name: str, data_type: str):
+@click.option(
+    "-d",
+    "--depth",
+    type=int,
+    default=20,
+    help="Maximum depth for URL search. Default: 20",
+)
+def main(url: str, output_file: str, browser_name: str, data_type: str, depth: int):
     browser = get_browser(browser_name)
     browser.start()
 
@@ -56,6 +63,7 @@ def main(url: str, output_file: str, browser_name: str, data_type: str):
         website_url=url,
         browser=browser,
         data_extractors=get_data_extractors(data_type),
+        depth=depth,
     )
     data = worker.get_data()
 
