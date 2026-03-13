@@ -39,8 +39,8 @@ class DefaultWorker:
         *,
         link_filter: LinkFilterBase | None = None,
         data_extractors: list[DataExtractor] | None = None,
-        depth: int = 20,
-        max_links_from_page: int = 20,
+        depth: int = 5,
+        max_links_from_page: int = 5,
     ):
         self.website_url = website_url.rstrip("/")
         self.browser = browser
